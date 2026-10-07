@@ -958,3 +958,239 @@ footer {
     border: 0;
   }
 }
+
+/* ---- 术语表 ---- */
+.glossary-dropzone {
+  height: 74px;
+  gap: 2px;
+}
+.glossary-dropzone.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+.glossary-hint {
+  margin: 10px 2px 0;
+  color: #96998e;
+  font-size: 10px;
+  line-height: 1.7;
+}
+.glossary-list {
+  list-style: none;
+  margin: 10px 0 0;
+  padding: 0;
+  max-height: 188px;
+  overflow: auto;
+  display: grid;
+  gap: 7px;
+}
+.glossary-item {
+  border: 1px solid #f0f0ea;
+  border-radius: 6px;
+  padding: 7px 9px;
+  display: grid;
+  gap: 5px;
+}
+.glossary-term {
+  display: flex;
+  align-items: baseline;
+  gap: 7px;
+  font-size: 11px;
+  color: #3b4036;
+  flex-wrap: wrap;
+}
+.glossary-arrow {
+  color: #a7ab9f;
+  font-size: 10px;
+}
+.glossary-preferred {
+  color: #5f7f38;
+}
+.glossary-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+.term-tag {
+  font-size: 9px;
+  border-radius: 4px;
+  padding: 1px 6px;
+  border: 1px solid transparent;
+}
+.term-tag.allowed {
+  color: #6a8a45;
+  background: #f2f7e9;
+  border-color: #e2ecd2;
+}
+.term-tag.forbidden {
+  color: #b35f52;
+  background: #fbf0ee;
+  border-color: #f2dad5;
+}
+.term-tag.scope {
+  color: #8b8156;
+  background: #faf6e9;
+  border-color: #eee4c6;
+}
+.issue-type-tag {
+  flex: 0 0 auto;
+  font-size: 9px;
+  line-height: 1.5;
+  border-radius: 4px;
+  padding: 0 6px;
+  border: 1px solid transparent;
+  white-space: nowrap;
+}
+.issue-type-tag.term-missing {
+  color: #b35f52;
+  background: #fbf0ee;
+  border-color: #f2dad5;
+}
+.issue-type-tag.term-inconsistent {
+  color: #a67b32;
+  background: #faf4e4;
+  border-color: #efe2bd;
+}
+.issue-type-tag.term-case,
+.issue-type-tag.term-width {
+  color: #6f7d92;
+  background: #eef2f7;
+  border-color: #dce4ee;
+}
+.issue-type-tag.term-ok {
+  color: #5f7f38;
+  background: #f2f7e9;
+  border-color: #e2ecd2;
+}
+.info-color {
+  color: #7c8aa0;
+}
+.term-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 9px;
+  font-size: 9px;
+  color: #8f9389;
+}
+.term-legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.term-legend-item i {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  border-radius: 3px;
+}
+.term-legend-item i.term-missing {
+  background: #f3c9c1;
+}
+.term-legend-item i.term-inconsistent {
+  background: #ecd39b;
+}
+.term-legend-item i.term-case,
+.term-legend-item i.term-width {
+  background: #cdd9e8;
+}
+.term-legend-item i.term-ok {
+  background: #d7e8b8;
+}
+
+/* 编辑区术语高亮：高亮层与 textarea 完全重叠对齐 */
+.term-edit-wrap {
+  position: relative;
+}
+.term-edit-wrap textarea,
+.term-highlight-layer {
+  margin: 0;
+  border: 1px solid #e7e8e1;
+  border-radius: 5px;
+  padding: 8px;
+  font: 11px/1.6 inherit;
+  white-space: pre-wrap;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+.term-edit-wrap.has-marks textarea {
+  position: relative;
+  z-index: 2;
+  background: transparent;
+  color: #383d34;
+  caret-color: #383d34;
+}
+.term-edit-wrap.has-marks textarea::selection {
+  background: #cfe3a6;
+}
+.term-highlight-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  color: transparent;
+  pointer-events: none;
+  overflow: hidden;
+}
+.term-highlight-layer mark {
+  border-radius: 3px;
+  padding: 0 1px;
+}
+.term-highlight-layer mark.term-missing {
+  background: #f3c9c1;
+}
+.term-highlight-layer mark.term-inconsistent {
+  background: #ecd39b;
+}
+.term-highlight-layer mark.term-case,
+.term-highlight-layer mark.term-width {
+  background: #cdd9e8;
+}
+.term-highlight-layer mark.term-ok {
+  background: #d7e8b8;
+}
+.term-hit-list {
+  list-style: none;
+  margin: 7px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 4px;
+  font-size: 10px;
+  color: #7d8177;
+}
+.term-hit-list li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+/* 交付区术语清单 */
+.term-report-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 11px 0;
+  margin-top: 4px;
+  border-top: 1px solid #f0f0ea;
+}
+.term-report-row strong {
+  display: block;
+  font-size: 12px;
+  color: #3b4036;
+}
+.term-report-row small,
+.glossary-badge {
+  display: block;
+  margin-top: 3px;
+  color: #95998e;
+  font-size: 10px;
+}
+.version-glossary-mark {
+  font-style: normal;
+  font-size: 9px;
+  color: #6f8f45;
+  background: #f2f7e9;
+  border-radius: 4px;
+  padding: 1px 5px;
+  margin: 0 6px;
+}

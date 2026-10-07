@@ -26,6 +26,11 @@ export function VersionExportModule({
               ? `最近：${project.versions.at(-1)?.label}`
               : "保存当前版本以便回退"}
           </small>
+          {project.glossary && (
+            <small className="glossary-badge">
+              快照包含术语表「{project.glossary.fileName}」
+            </small>
+          )}
         </div>
         <button
           className="secondary-button"
@@ -42,9 +47,26 @@ export function VersionExportModule({
               onClick={() => void vm.restoreVersion(version.id)}
             >
               {version.label}
+              {version.glossary && (
+                <em className="version-glossary-mark">含术语表</em>
+              )}
               <span>恢复 ↗</span>
             </button>
           ))}
+        </div>
+      )}
+      {project.glossary && (
+        <div className="term-report-row">
+          <div>
+            <strong>术语使用情况清单</strong>
+            <small>交付附件 · 汇总每个术语的命中位置、漏译与写法差异</small>
+          </div>
+          <button
+            className="secondary-button"
+            onClick={() => void vm.exportTermReport()}
+          >
+            导出清单 <span>↓</span>
+          </button>
         </div>
       )}
       <div className="export-row">

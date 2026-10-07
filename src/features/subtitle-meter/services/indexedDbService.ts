@@ -1,6 +1,21 @@
 import type { SubtitleProject } from "../models";
 const DB_NAME = "subtitle-meter-db",
   STORE = "projects";
+
+/** 旧版本项目没有 glossary 字段；损坏的术语表则整体丢弃，保证基础检查不受影响 */
+function normalizeProject(value: SubtitleProject): SubtitleProject | null {
+  if (value.glossary === undefined) return value;
+  if (
+    value.glossary &&
+    value.glossary.version === 1 &&
+    Array.isArray(value.glossary.terms)
+  )
+    return value;
+  const cleaned = { ...value };
+  delete cleaned.glossary;
+  return cleaned;
+}
+
 function openDb(): Promise<IDBDatabase> {
   return new Promise((resolve, reject) => {
     const request = indexedDB.open(DB_NAME, 1);
@@ -22,7 +37,7 @@ export async function readProject(): Promise<SubtitleProject | null> {
       const value = request.result;
       resolve(
         value && Array.isArray(value.cues) && Array.isArray(value.versions)
-          ? value
+          ? normalizeProject(value)
           : null,
       );
       db.close();
