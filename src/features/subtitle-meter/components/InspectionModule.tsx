@@ -1,13 +1,30 @@
-import type { SubtitleCue, SubtitleIssue } from "../models";
+import type { GlossaryHit, SubtitleCue, SubtitleIssue } from "../models";
 import type { SubtitleMeterViewModel } from "../viewmodels/subtitleMeterViewModel";
+import { HighlightedTextarea } from "./HighlightedTextarea";
+
+const TERM_TYPES = new Set<SubtitleIssue["type"]>([
+  "glossary-missing",
+  "glossary-inconsistent",
+  "glossary-case",
+  "glossary-width",
+]);
+const TERM_LABEL: Partial<Record<SubtitleIssue["type"], string>> = {
+  "glossary-missing": "漏译",
+  "glossary-inconsistent": "译法不一",
+  "glossary-case": "大小写",
+  "glossary-width": "全半角",
+};
+
 export function InspectionModule({
   cues,
   issues,
+  glossaryHits,
   vm,
   selectedId,
 }: {
   cues: SubtitleCue[];
   issues: SubtitleIssue[];
+  glossaryHits: GlossaryHit[];
   vm: SubtitleMeterViewModel;
   selectedId: string | null;
 }) {
@@ -16,10 +33,14 @@ export function InspectionModule({
   const warnings = issues.filter(
     (issue) => issue.severity === "warning",
   ).length;
+  const termCount = issues.filter((issue) => TERM_TYPES.has(issue.type)).length;
   const cps = selected
     ? [...selected.text.replace(/\s/g, "")].length /
       Math.max(0.1, (selected.endMs - selected.startMs) / 1000)
     : 0;
+  const selectedHits = selected
+    ? glossaryHits.filter((hit) => hit.cueId === selected.id)
+    : [];
   return (
     <section className="module inspection-module">
       <div className="module-head">
@@ -32,6 +53,9 @@ export function InspectionModule({
         <div className="issue-summary">
           <span className="error-color">{errors} 错误</span>
           <span className="warning-color">{warnings} 提醒</span>
+          {termCount > 0 && (
+            <span className="term-color">{termCount} 术语</span>
+          )}
         </div>
       </div>
       <div className="issue-list">
@@ -39,13 +63,18 @@ export function InspectionModule({
           issues.map((issue) => (
             <button
               key={issue.id}
-              className={`issue-row ${issue.severity}`}
+              className={`issue-row ${issue.severity} ${TERM_TYPES.has(issue.type) ? `term-row ${issue.type}` : ""}`}
               onClick={() => vm.selectCue(issue.cueId)}
             >
               <span className="issue-bullet">
                 {issue.severity === "error" ? "!" : "·"}
               </span>
-              <span>{issue.message}</span>
+              <span className="issue-message">{issue.message}</span>
+              {TERM_TYPES.has(issue.type) && (
+                <span className="term-tag">
+                  术语 · {TERM_LABEL[issue.type]}
+                </span>
+              )}
               <span className="issue-cue">
                 #{cues.find((cue) => cue.id === issue.cueId)?.index}
               </span>
@@ -63,13 +92,32 @@ export function InspectionModule({
               {cps.toFixed(1)} 字/秒
             </span>
           </div>
-          <textarea
-            aria-label="字幕文本"
+          {selectedHits.length > 0 && (
+            <div className="term-legend">
+              <span>本条目术语命中：</span>
+              {[...new Set(selectedHits.map((hit) => hit.kind))].map((kind) => (
+                <span key={kind} className={`term-chip term-chip-${kind}`}>
+                  {kind === "preferred"
+                    ? "首选写法"
+                    : kind === "variant"
+                      ? "其它允许写法"
+                      : kind === "missing"
+                        ? "疑似漏译"
+                        : kind === "case"
+                          ? "大小写差异"
+                          : kind === "width"
+                            ? "全半角差异"
+                            : "允许写法"}
+                </span>
+              ))}
+            </div>
+          )}
+          <HighlightedTextarea
+            ariaLabel="字幕文本"
             value={selected.text}
-            onChange={(e) =>
-              void vm.editCue(selected.id, { text: e.target.value })
-            }
+            hits={selectedHits}
             rows={Math.min(4, Math.max(2, selected.text.split("\n").length))}
+            onChange={(text) => void vm.editCue(selected.id, { text })}
           />
           <div className="time-edit">
             <label>

@@ -16,3 +16,14 @@ export function downloadSubtitles(
   anchor.click();
   URL.revokeObjectURL(url);
 }
+export function downloadReport(name: string, content: string): void {
+  const blob = new Blob([content], {
+    type: "text/csv;charset=utf-8",
+  });
+  const url = URL.createObjectURL(blob),
+    anchor = document.createElement("a");
+  anchor.href = url;
+  anchor.download = `${name.replace(/\.(srt|vtt)$/i, "")}-glossary-usage.csv`;
+  anchor.click();
+  URL.revokeObjectURL(url);
+}

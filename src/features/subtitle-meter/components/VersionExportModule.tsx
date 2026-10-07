@@ -47,6 +47,23 @@ export function VersionExportModule({
           ))}
         </div>
       )}
+      {project.glossary && project.glossary.terms.length > 0 && (
+        <div className="version-row glossary-report-row">
+          <div>
+            <strong>术语使用情况清单</strong>
+            <small>
+              {project.glossary.terms.length} 条术语 ·
+              导出命中条目、漏译与不一致明细（CSV）
+            </small>
+          </div>
+          <button
+            className="secondary-button"
+            onClick={() => vm.exportGlossaryReport()}
+          >
+            导出清单 <span>↓</span>
+          </button>
+        </div>
+      )}
       <div className="export-row">
         <label>
           格式

@@ -958,3 +958,224 @@ footer {
     border: 0;
   }
 }
+
+/* ===== 术语表模块 ===== */
+.glossary-module {
+  padding: 17px 20px 16px;
+}
+.glossary-dropzone {
+  height: 82px;
+}
+.glossary-format-hint {
+  margin: 8px 2px 0;
+  color: #a2a399;
+  font-size: 9px;
+  line-height: 1.6;
+}
+.secondary-button.subtle {
+  color: #a0826e;
+  border-color: #ece1db;
+}
+.glossary-status-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  font-size: 11px;
+  color: #5f6559;
+}
+.glossary-status-head .status-dot {
+  background: #8cbd54;
+}
+.glossary-replace {
+  margin-left: auto;
+  border: 1px solid #e3e5dd;
+  border-radius: 5px;
+  padding: 5px 9px;
+  color: #607e39;
+  font-size: 10px;
+  cursor: pointer;
+  position: relative;
+}
+.glossary-replace input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+.glossary-term-list {
+  list-style: none;
+  margin: 10px 0 0;
+  padding: 0;
+  border-top: 1px solid #efefe9;
+}
+.glossary-term-list li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 0;
+  border-bottom: 1px solid #f4f4ef;
+  font-size: 10px;
+}
+.glossary-term-source {
+  color: #3a4033;
+  font-weight: 600;
+}
+.glossary-term-arrow {
+  color: #b3b6ab;
+}
+.glossary-term-allowed {
+  color: #7b8074;
+}
+.glossary-term-scope {
+  margin-left: auto;
+  border-radius: 4px;
+  padding: 1px 6px;
+  background: #eef2e4;
+  color: #70904a;
+  font-size: 9px;
+  white-space: nowrap;
+}
+.glossary-term-more {
+  color: #a2a399;
+  justify-content: center;
+}
+.glossary-warnings {
+  margin: 8px 0 0;
+  padding-left: 18px;
+  color: #b08448;
+  font-size: 10px;
+  line-height: 1.7;
+}
+.glossary-report-row {
+  padding-bottom: 12px;
+  border-bottom: 1px solid #efefe9;
+}
+
+/* ===== 检查列表中的术语标记 ===== */
+.term-color {
+  color: #7a63c9;
+}
+.issue-row .issue-message {
+  flex: 1;
+  min-width: 0;
+  line-height: 1.5;
+}
+.issue-row.term-row .issue-message {
+  color: #5f5a75;
+}
+.term-tag {
+  flex-shrink: 0;
+  border-radius: 4px;
+  padding: 1px 6px;
+  background: #eeebfa;
+  color: #6a54b8;
+  font-size: 9px;
+  white-space: nowrap;
+}
+.issue-row.term-row.glossary-missing .term-tag {
+  background: #f8e7e4;
+  color: #b5594b;
+}
+.issue-cue {
+  flex-shrink: 0;
+}
+
+/* ===== 编辑区术语高亮 ===== */
+.term-legend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 7px;
+  color: #9a9d92;
+  font-size: 9px;
+}
+.term-chip {
+  border-radius: 4px;
+  padding: 1px 6px;
+  font-size: 9px;
+}
+.term-chip-preferred,
+.term-chip-ok {
+  background: #eef4e0;
+  color: #67893f;
+}
+.term-chip-variant {
+  background: #e8f0f3;
+  color: #4f7d8f;
+}
+.term-chip-case {
+  background: #f6efdd;
+  color: #a8813c;
+}
+.term-chip-width {
+  background: #f3e9f1;
+  color: #9c5f8e;
+}
+.term-chip-missing {
+  background: #f8e7e4;
+  color: #b5594b;
+}
+.highlight-edit {
+  position: relative;
+}
+.highlight-backdrop,
+.highlight-input {
+  box-sizing: border-box;
+  /* 与 .edit-card textarea 相同的字体、内边距与行高，保证背板与文字对齐 */
+  width: 100%;
+  padding: 8px;
+  font: 11px/1.6 inherit;
+  letter-spacing: 0;
+}
+.highlight-backdrop {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-color: transparent;
+  color: transparent;
+  pointer-events: none;
+  background: #fff;
+  border-radius: 5px;
+}
+.highlight-input {
+  position: relative;
+  display: block;
+  border-color: #e7e8e1;
+  background: transparent;
+  border-radius: 5px;
+  color: #383d34;
+  outline: none;
+  resize: vertical;
+  overflow: auto;
+}
+.highlight-input:focus {
+  border-color: #a9c778;
+}
+.term-mark {
+  border-radius: 3px;
+  padding: 0 1px;
+  background: transparent;
+  color: transparent;
+}
+.term-mark.term-ok {
+  background: #dcebc4;
+  box-shadow: 0 0 0 1px #c5dd99;
+}
+.term-mark.term-variant {
+  background: #d7e8ee;
+  box-shadow: 0 0 0 1px #b5d4df;
+}
+.term-mark.term-case {
+  background: #f1e2bd;
+  box-shadow: 0 0 0 1px #e2c783;
+}
+.term-mark.term-width {
+  background: #ecd7e6;
+  box-shadow: 0 0 0 1px #dbb2d0;
+}
+.term-mark.term-missing {
+  background: #f4cfc8;
+  box-shadow: 0 0 0 1px #e3a69c;
+}

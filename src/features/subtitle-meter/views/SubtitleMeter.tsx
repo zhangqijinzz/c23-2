@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState, useSyncExternalStore } from "react";
+import { GlossaryModule } from "../components/GlossaryModule";
 import { ImportModule } from "../components/ImportModule";
 import { InspectionModule } from "../components/InspectionModule";
 import { PreviewModule } from "../components/PreviewModule";
@@ -120,20 +121,26 @@ export function SubtitleMeter() {
               fileName={project?.name}
             />
             {project ? (
-              <section className="module project-overview">
-                <div>
-                  <span className="module-kicker">CURRENT PROJECT</span>
-                  <h2>{project.name}</h2>
-                  <p>
-                    {project.cues.length} 条字幕 ·{" "}
-                    {project.format.toUpperCase()} · 已自动保存到此浏览器
-                  </p>
-                </div>
-                <div className="overview-count">
-                  <strong>{state.issues.length}</strong>
-                  <span>待处理问题</span>
-                </div>
-              </section>
+              <>
+                <section className="module project-overview">
+                  <div>
+                    <span className="module-kicker">CURRENT PROJECT</span>
+                    <h2>{project.name}</h2>
+                    <p>
+                      {project.cues.length} 条字幕 ·{" "}
+                      {project.format.toUpperCase()} · 已自动保存到此浏览器
+                      {project.glossary?.terms.length
+                        ? ` · 术语表 ${project.glossary.terms.length} 条`
+                        : ""}
+                    </p>
+                  </div>
+                  <div className="overview-count">
+                    <strong>{state.issues.length}</strong>
+                    <span>待处理问题</span>
+                  </div>
+                </section>
+                <GlossaryModule vm={vm} glossary={project.glossary} />
+              </>
             ) : (
               <section className="module import-welcome">
                 <div className="welcome-icon">S</div>
@@ -178,6 +185,7 @@ export function SubtitleMeter() {
               <InspectionModule
                 cues={project.cues}
                 issues={state.issues}
+                glossaryHits={state.glossaryHits}
                 vm={vm}
                 selectedId={state.selectedId}
               />

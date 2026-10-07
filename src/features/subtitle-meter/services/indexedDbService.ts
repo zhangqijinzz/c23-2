@@ -20,6 +20,7 @@ export async function readProject(): Promise<SubtitleProject | null> {
       .get("subtitle-meter.current.v1");
     request.onsuccess = () => {
       const value = request.result;
+      // 术语表为可选项：旧版本地数据没有 glossary 字段也照常恢复
       resolve(
         value && Array.isArray(value.cues) && Array.isArray(value.versions)
           ? value
